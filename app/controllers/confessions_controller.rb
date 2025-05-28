@@ -1,6 +1,11 @@
 class ConfessionsController < ApplicationController
   def index
-    @confessions = Confession.order(created_at: :desc)
+    @confessions = Confession.order(created_at: :desc).page(params[:page]).per(21)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def new
