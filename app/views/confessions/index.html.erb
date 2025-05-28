@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "confessions_list" do %>
+  <div class="p-4 max-w-6xl mx-auto mt-4">
+    <% if @confessions.any? %>
+        <%= render partial: "confessions/list", locals: { confessions: @confessions } %>
+    <% else %>
+      <div class="text-center text-gray-500 text-lg py-12">
+        🕊️ Be the first to share a confession!
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<div id="confessions_grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  <%= render partial: "confessions/confession", collection: confessions, as: :confession %>
+</div>
+
+<div class="fixed bottom-7 left-1/2 transform -translate-x-1/2 mt-10 flex justify-center">
+  <nav class="flex items-center gap-3" aria-label="Pagination">
+    <%= link_to_if confessions.prev_page, raw('← Prev'), url_for(page: confessions.prev_page), class: "px-4 py-2 text-sm font-medium rounded-full border border-gray-300 bg-white text-black hover:bg-purple-100 transition", remote: true %>
+
+    <% (1..confessions.total_pages).each do |page| %>
+      <% active = page == confessions.current_page %>
+      <%= link_to page, url_for(page: page), class: "px-4 py-2 text-sm font-semibold rounded-full border transition #{active ? 'bg-purple-600 text-white' : 'bg-white text-purple-600 border-gray-300 hover:bg-purple-100'}", remote: true %>
+    <% end %>
+
+    <%= link_to_if confessions.next_page, raw('Next →'), url_for(page: confessions.next_page), class: "px-4 py-2 text-sm font-medium rounded-full border border-gray-300 bg-white text-purple-600 hover:bg-purple-100 transition", remote: true %>
+  </nav>
+</div>
+

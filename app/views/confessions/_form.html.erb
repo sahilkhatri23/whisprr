@@ -1,0 +1,27 @@
+<%= form_with model: @confession,
+              url: confessions_path,
+              method: :post,
+              data: {
+                turbo: true,
+                turbo_frame: :confession,
+                controller: "confession",
+                action: "turbo:submit-end->confession#submitEnd"
+              },
+              class: "space-y-4" do |f| %>
+
+  <div>
+    <%= f.text_area :body,
+        rows: 4,
+        placeholder: "Max 500 characters...",
+        class: "w-full p-2 border border-gray-300 rounded resize-none" %>
+
+    <% if @confession.errors[:body].any? %>
+      <p class="text-sm text-red-500 pl-0.5"><%= @confession.errors[:body].first %></p>
+    <% end %>
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <%= link_to "Cancel", "", data: { action: "click->modal#close" }, class: "text-gray-500 hover:text-gray-700 pt-2" %>
+    <%= f.submit "Submit", class: "bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition" %>
+  </div>
+<% end %>

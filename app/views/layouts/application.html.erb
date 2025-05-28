@@ -18,5 +18,7 @@
     <%= render "shared/tabs" %>
 
     <%= yield %>
+
+    <%= turbo_frame_tag "modal", data: { controller: "modal" } %>
   </body>
 </html>
