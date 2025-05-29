@@ -1,6 +1,8 @@
 class ConfessionsController < ApplicationController
+  PER_PAGE = 21
+
   def index
-    @confessions = Confession.order(created_at: :desc).page(params[:page]).per(21)
+    @confessions = Confession.order(created_at: :desc).page(params[:page]).per(PER_PAGE)
 
     respond_to do |format|
       format.html
@@ -16,6 +18,8 @@ class ConfessionsController < ApplicationController
     @confession = Confession.new(confession_params)
 
     if @confession.save
+      @confessions = Confession.order(created_at: :desc).page(1).per(PER_PAGE)
+      
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to confessions_path, notice: "Confession created!" }

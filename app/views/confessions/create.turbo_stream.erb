@@ -1,2 +1,21 @@
-<%= turbo_stream.prepend "confessions_grid", partial: "confessions/confession", locals: { confession: @confession } %>
+<% if @current_page.to_i == 1 || @confessions.total_count <= 21 %>
+  <%= turbo_stream.prepend "confessions_grid", partial: "confessions/confession", locals: { confession: @confession } %>
+  
+  <% if @confessions.total_count > 21 %>
+    <%= turbo_stream.remove "confessions_grid > div:nth-child(21)" %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "confessions_list" do %>
+  <div class="p-4 max-w-6xl mx-auto mt-4">
+    <% if @confessions.any? %>
+      <%= render partial: "confessions/list", locals: { confessions: @confessions } %>
+    <% else %>
+      <div class="text-center text-gray-500 text-lg py-12">
+        🕊️ Be the first to share a confession!
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
 <%= turbo_stream.update "modal", "" %>
